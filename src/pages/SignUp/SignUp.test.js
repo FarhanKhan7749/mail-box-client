@@ -9,7 +9,7 @@ describe('SignUp Component', () => {
   });
 });
 
-describe('SignUp Password', () => {
+describe('password mismatch', () => {
     test('displays error message for password mismatch', () => {
         render(<SignUp />);
         const passwordInputs = screen.getAllByPlaceholderText(/Password/i);
@@ -28,7 +28,7 @@ describe('SignUp Password', () => {
   });
 
 
-  describe('SignUp email', () => {
+  describe('invalid email format', () => {
     test('displays error message for invalid email format', () => {
         render(<SignUp />);
         const emailInput = screen.getByPlaceholderText(/Email/i);
@@ -42,7 +42,7 @@ describe('SignUp Password', () => {
       });
   });
 
-  describe('successful signup', () => {
+  describe('successful Authentication', () => {
     test('displays success message after successful signup', async () => {
         render(<SignUp />);
         const emailInput = screen.getByPlaceholderText(/Email/i);
