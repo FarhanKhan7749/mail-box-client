@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import Header from './components/Layout/Header';
 import SignUp from './pages/SignUp/SignUp';
-import Welcome from './pages/Welcome/Welcome';
+//import Welcome from './pages/Welcome/Welcome';
 import { authActions } from './components/Layout/store/auth-slice';
+import ComposeEmail from './pages/Mail/ComposeMail';
 
 
 function App() {
@@ -23,15 +24,15 @@ function App() {
     <Switch>
       <Route path='/' exact>
         {!isLogin && <Redirect to='/auth' />}
-        {isLogin && <Redirect to='/welcome' />}
+        {isLogin && <Redirect to='/mail' />}
       </Route>
       <Route path='/auth'>
         <Header />
         <SignUp />
       </Route>
-      <Route path='/welcome'>
+      <Route path='/mail'>
         <Header />
-        {isLogin && <Welcome />}
+        {isLogin && <ComposeEmail />}
         {!isLogin && <Redirect to='/' />}
       </Route>
       <Route path='*'>
