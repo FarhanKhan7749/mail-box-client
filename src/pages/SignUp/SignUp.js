@@ -1,8 +1,10 @@
 import { Button } from 'react-bootstrap';
 import { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import classes from './SignUp.module.css';
+import { authActions } from '../../components/Layout/store/auth-slice';
 
 const SignUp = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -11,6 +13,7 @@ const SignUp = () => {
     const passwordInputRef = useRef();
     const confirmPasswordRef = useRef();
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const switchAuthModeHandler = () => {
         setIsLogin((prevState) => !prevState)
@@ -60,6 +63,7 @@ const SignUp = () => {
                 localStorage.setItem('token', data.idToken);
                 console.log(data);
                 history.replace('/welcome');
+                dispatch(authActions.login({token: data.idToken, email: email}));
                 isLogin ? console.log("User has successfully Sign In.") : console.log("User has successfully signed up.");
             } else {
                 setError('Something went wrong. Please try again later.');
