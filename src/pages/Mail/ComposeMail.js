@@ -14,11 +14,9 @@ const ComposeEmail = () => {
     const email = useSelector(state => state.auth.email)
     const inputMailRef = useRef()
     const inputSubjectRef = useRef();
-
     const editorHandler = (editorState) => {
         setEditorState(editorState)
     }
-
     const composeMailHandler = async (event) => {
         event.preventDefault();
         const receiverEmail = inputMailRef.current.value.replace('@', '').replace('.', '');
@@ -27,13 +25,21 @@ const ComposeEmail = () => {
             subject: inputSubjectRef.current.value,
             body: editorState.getCurrentContent().getPlainText()
         }
-        try{
-            const response = await fetch(`https://mail-box-client-8f262-default-rtdb.firebaseio.com/${receiverEmail}.json`, {
+        const senderMailData = {
+            sentTo: receiverEmail,
+            subject: inputSubjectRef.current.value,
+            body: editorState.getCurrentContent().getPlainText()
+        }
+        try {
+            await fetch(`https://mail-box-client-8f262-default-rtdb.firebaseio.com/inbox/${receiverEmail}.json`, {
                 method: 'POST',
                 body: JSON.stringify(receiverMailData)
             })
-            console.log(response);
-        }catch(error){
+            await fetch(`https://mail-box-client-8f262-default-rtdb.firebaseio.com/sent/${email}.json`, {
+                method: 'POST',
+                body: JSON.stringify(senderMailData)
+            })
+        } catch (error) {
             alert(error);
         }
         inputMailRef.current.value = '';

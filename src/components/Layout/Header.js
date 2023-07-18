@@ -1,7 +1,8 @@
 import { Navbar, Container, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { authActions } from "./store/auth-slice";
+import classes from "./Header.module.css"; 
 
 const Header = () => {
     const history = useHistory();
@@ -15,10 +16,19 @@ const Header = () => {
         history.replace('/auth');
     }
 
+    const composeMailHandler = () => {
+        history.replace('/mail');
+    }
+
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
                 <Navbar.Brand >Mail-Box-Client</Navbar.Brand>
+                {isLogin && <ul className={classes.navbar}>
+                    <li className={classes.li}><Link to="/inbox">Inbox</Link></li>
+                    <li className={classes.li}><Link to="/sent">Sent</Link></li>
+                </ul>}
+                {isLogin && <Button size="sm" onClick={composeMailHandler}>Compose</Button>}
             </Container>
             {isLogin && <Button
                 variant="warning"

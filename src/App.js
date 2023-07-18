@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import Header from './components/Layout/Header';
 import SignUp from './pages/SignUp/SignUp';
+import Inbox from './pages/Mail/Inbox';
 //import Welcome from './pages/Welcome/Welcome';
 import { authActions } from './components/Layout/store/auth-slice';
 import ComposeEmail from './pages/Mail/ComposeMail';
@@ -33,6 +34,11 @@ function App() {
       <Route path='/mail'>
         <Header />
         {isLogin && <ComposeEmail />}
+        {!isLogin && <Redirect to='/' />}
+      </Route>
+      <Route path='/inbox'>
+        <Header />
+        {isLogin && <Inbox />}
         {!isLogin && <Redirect to='/' />}
       </Route>
       <Route path='*'>
