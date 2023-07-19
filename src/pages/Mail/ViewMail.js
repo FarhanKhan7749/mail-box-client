@@ -9,6 +9,14 @@ const ViewMail = (props) => {
         dispatch(mailActions.mailHandler());
     }
     console.log(viewMail)
+
+    const deleteMailHandler = async () => {
+        await fetch(`https://mail-box-client-8f262-default-rtdb.firebaseio.com/inbox/${props.email}/${props.mail.id}.json`, {
+            method: 'DELETE'
+        })
+        dispatch(mailActions.deleteReceivedMail({ id: props.mail.id }));
+        console.log("Mail is deleted successfully");
+    }
     return (
         <Modal
             show={viewMail}
@@ -20,10 +28,10 @@ const ViewMail = (props) => {
                 <Modal.Title>Mail</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {props.message}
+                {props.mail.body}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant='danger'>Delete</Button>
+                <Button variant='danger' onClick={deleteMailHandler}>Delete</Button>
             </Modal.Footer>
         </Modal>
     )
