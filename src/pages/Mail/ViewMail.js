@@ -7,16 +7,25 @@ const ViewMail = (props) => {
     const dispatch = useDispatch();
     const viewMailHandler = () => {
         dispatch(mailActions.mailHandler());
+        console.log(viewMail);
     }
-    console.log(viewMail)
 
     const deleteMailHandler = async () => {
-        await fetch(`https://mail-box-client-8f262-default-rtdb.firebaseio.com/inbox/${props.email}/${props.mail.id}.json`, {
+        let url;
+        if (props.type === "received") {
+            url = `https://mail-box-client-8f262-default-rtdb.firebaseio.com/inbox/${props.email}/${props.mail.id}.json`
+        } else {
+            url = `https://mail-box-client-8f262-default-rtdb.firebaseio.com/sent/${props.email}/${props.mail.id}.json`
+        }
+        await fetch(url, {
             method: 'DELETE'
         })
-        dispatch(mailActions.deleteReceivedMail({ id: props.mail.id }));
-        console.log("Mail is deleted successfully");
-    }
+        if (props.type === "received") {
+            dispatch(mailActions.deleteReceivedMail({ id: props.mail.id }));
+        } else {
+            dispatch(mailActions.deleteSentMail({ id: props.mail.id }))
+        }
+    };
     return (
         <Modal
             show={viewMail}

@@ -7,6 +7,7 @@ import Inbox from './pages/Mail/Inbox';
 //import Welcome from './pages/Welcome/Welcome';
 import { authActions } from './components/Layout/store/auth-slice';
 import ComposeEmail from './pages/Mail/ComposeMail';
+import SentBox from './pages/Mail/SentBox';
 
 
 function App() {
@@ -39,6 +40,11 @@ function App() {
       <Route path='/inbox'>
         <Header />
         {isLogin && <Inbox />}
+        {!isLogin && <Redirect to='/' />}
+      </Route>
+      <Route path='/sent'>
+        <Header />
+        {isLogin && <SentBox />}
         {!isLogin && <Redirect to='/' />}
       </Route>
       <Route path='*'>
